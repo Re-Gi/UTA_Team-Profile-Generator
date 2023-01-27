@@ -1,10 +1,13 @@
-const Employee = require("../lib/Employee");
+const Employee = require('../lib/Employee');
 
 describe("Employee class", () => {
     describe("Initialization", () => {
-        it("should ", () => {
+        it("should take name, id, and email values and create a new object", () => {
+            const sharon = new Employee("Sharon", 1, "sharon@email.com");
             
-            expect();
+            expect(sharon.name).toEqual("Sharon");
+            expect(sharon.id).toEqual(1);
+            expect(sharon.email).toEqual("sharon@email.com");
         });
     });
     
