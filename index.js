@@ -5,115 +5,147 @@ const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 
-const newEmployee = new Engineer();
+const employees = [];
+const employeeDivs = [];
 
-switch(newEmployee.getRole()) {
-    case 'Manager':
-        inquirer.prompt([
-            {
-                type: 'input',
-                name: 'name',
-                message: "What is the team manager's name?",
-            },
+const teamLead = new Manager();
 
-            {
-                type: 'input',
-                name: 'id',
-                message: "What is the team manager's id?",
-            },
+const buildTeam = (newEmployee) => {
+    const employeeQs = [
+        {
+            type: 'input',
+            name: 'name',
+            message: "What is the employee's name?",
+        },
+    
+        {
+            type: 'input',
+            name: 'id',
+            message: "What is the employee's id?",
+        },
+    
+        {
+            type: 'input',
+            name: 'email',
+            message: "What is the employee's email?",
+        },
+    ]
+    switch(newEmployee.getRole()) {
+        case 'Manager':
+            inquirer.prompt([
+                ...employeeQs,
+                {
+                    type: 'input',
+                    name: 'office',
+                    message: "What is the employee's office number?",
+                },
 
-            {
-                type: 'input',
-                name: 'email',
-                message: "What is the team manager's email?",
-            },
+                {
+                    type: 'list',
+                    name: 'next',
+                    message: "Would you like to add another emloyee?",
+                    choices: ["Manager", "Engineer", "Intern", "No more employees."],
+                },
+            ])
+            .then((res) => {
+                newEmployee.name = res.name;
+                newEmployee.id = res.id;
+                newEmployee.email = res.email;
+                newEmployee.officeNumber = res.office;
 
-            {
-                type: 'input',
-                name: 'office',
-                message: "What is the manager's office number?",
-            },
-        ])
-        // .then(fs.appendFile)
-        .then((res) => {
-            this.name = res.name;
-            this.id = res.id;
-            this.email = res.email;
-            this.officeNumber = res.office;
+                generateDiv(newEmployee);
+                checkNext(res.next);
+            })
+            break;
+        case 'Engineer':
+            inquirer.prompt([
+                ...employeeQs,
+                {
+                    type: 'input',
+                    name: 'github',
+                    message: "What is the employee's GitHub username?",
+                },
 
-            console.log(this);
-        })
-        break;
-    case 'Engineer':
-        inquirer.prompt([
-            {
-                type: 'input',
-                name: 'name',
-                message: "What is this engineer's name?",
-            },
+                {
+                    type: 'list',
+                    name: 'next',
+                    message: "Would you like to add another emloyee?",
+                    choices: ["Manager", "Engineer", "Intern", "No more employees."],
+                },
+            ])
+            .then((res) => {
+                newEmployee.name = res.name;
+                newEmployee.id = res.id;
+                newEmployee.email = res.email;
+                newEmployee.github = res.github;
 
-            {
-                type: 'input',
-                name: 'id',
-                message: "What is this engineer's id?",
-            },
+                generateDiv(newEmployee);
+                checkNext(res.next);
+            })
+            break;
+        case 'Intern':
+            inquirer.prompt([
+                ...employeeQs,
+                {
+                    type: 'input',
+                    name: 'school',
+                    message: "What school does/did the employee attend?",
+                },
 
-            {
-                type: 'input',
-                name: 'email',
-                message: "What is this engineer's email?",
-            },
+                {
+                    type: 'list',
+                    name: 'next',
+                    message: "Would you like to add another emloyee?",
+                    choices: ["Manager", "Engineer", "Intern", "No more employees."],
+                },
+            ])
+            .then((res) => {
+                newEmployee.name = res.name;
+                newEmployee.id = res.id;
+                newEmployee.email = res.email;
+                newEmployee.school = res.school;
 
-            {
-                type: 'input',
-                name: 'github',
-                message: "What is this engineer's GitHub username?",
-            },
-        ])
-        // .then(fs.appendFile)
-        .then((res) => {
-            this.name = res.name;
-            this.id = res.id;
-            this.email = res.email;
-            this.github = res.github;
-
-            console.log(this);
-        })
-        break;
-    case 'Intern':
-        inquirer.prompt([
-            {
-                type: 'input',
-                name: 'name',
-                message: "What is this intern's name?",
-            },
-
-            {
-                type: 'input',
-                name: 'id',
-                message: "What is this intern's id?",
-            },
-
-            {
-                type: 'input',
-                name: 'email',
-                message: "What is this intern's email?",
-            },
-
-            {
-                type: 'input',
-                name: 'school',
-                message: "What school does/did this intern attend?",
-            },
-        ])
-        // .then(fs.appendFile)
-        .then((res) => {
-            this.name = res.name;
-            this.id = res.id;
-            this.email = res.email;
-            this.school = res.school;
-
-            console.log(this);
-        })
-        break;
+                generateDiv(newEmployee);
+                checkNext(res.next);
+            })
+            break;
+    }
 }
+
+const checkNext = (str) => {
+    switch(str) {
+        case "Manager":
+            const newManager = new Manager();
+            buildTeam(newManager);
+            break;
+        case "Engineer":
+            const newEngineer = new Engineer();
+            buildTeam(newEngineer);
+            break;
+        case "Intern":
+            const newIntern = new Intern();
+            buildTeam(newIntern);
+            break;
+        default:
+            generateHTML();
+    };
+};
+
+const generateDiv = (data) => {
+    employees.push(data);
+    const employeeDiv = `<h2 class="card-title">${data.name}</h2>`
+
+    employeeDivs.push(employeeDiv);
+};
+
+const generateHTML = () => {
+    console.log(employees);
+
+    // fs.readFileSync(`./src/template.html`, {encoding: 'utf8', flag:'as'});
+
+    // fs.copyFileSync(`./src/template.html`, `./dist/team.html`);
+};
+
+
+
+buildTeam(teamLead);
