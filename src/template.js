@@ -52,7 +52,8 @@ ${teamHTML}
     </div>
 </body>
 </html>`, 
-(err) => err ? console.log(err) : console.log('Success!'))
+    (err) => {err ? console.log(err) : console.log('Success!')});
+
 };
 
 module.exports = { generateDiv, generateHTML }

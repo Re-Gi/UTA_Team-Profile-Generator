@@ -9,6 +9,20 @@ describe("Manager class", () => {
         });
     });
 
+    describe("getSpecial method", () => {
+        it("should ", () => {
+            
+            expect();
+        });
+    });
+
+    describe("getIcon method", () => {
+        it("should ", () => {
+            
+            expect();
+        });
+    });
+
     describe("getRole method", () => {
         it("should ", () => {
             
