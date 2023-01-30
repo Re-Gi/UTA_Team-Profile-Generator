@@ -1,4 +1,29 @@
-<!DOCTYPE html>
+const fs = require('fs');
+
+const employeeDivs = [];
+
+const generateDiv = (employee) => {
+    const divStr = `<div class="card employee-card">
+<div class="card-header bg-primary text-white">
+    <h2 class="card-title">${employee.getName()}</h2>
+    <h3 class="card-title"><i class="fas ${employee.getIcon()} mr-2"></i>${employee.getRole()}</h3>
+</div>
+<div class="card-body">
+    <ul class="list-group">
+        <li class="list-group-item">ID: ${employee.getId()}</li>
+        <li class="list-group-item">Email: <a href="mailto:${employee.getEmail()}">${employee.getEmail()}</a></li>
+        <li class="list-group-item">${employee.getSpecial()}</li>
+    </ul>
+</div>
+</div>`
+
+    employeeDivs.push(divStr);
+};
+
+const generateHTML = () => {
+    const teamHTML = employeeDivs.join("");
+
+    fs.writeFileSync('./dist/team.html', `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
@@ -21,22 +46,13 @@
     <div class="container">
         <div class="row">
             <div class="row team-area col-12 d-flex justify-content-center">
-<div class="card employee-card">
-    <div class="card-header bg-primary text-white">
-        <h2 class="card-title">Less Nessman</h2>
-        <h3 class="card-title"><i class="fas fa-mug-hot mr-2"></i>Manager</h3>
-    </div>
-    <div class="card-body">
-        <ul class="list-group">
-            <li class="list-group-item">ID: 86525</li>
-            <li class="list-group-item">Email: <a href="mailto:bigboss@gmail.com">bigboss@gmail.com</a></li>
-            <li class="list-group-item">Office number: 512-459-2222</li>
-        </ul>
-    </div>
-</div>
-${employees}
+${teamHTML}
             </div>
         </div>
     </div>
 </body>
-</html>
+</html>`, 
+(err) => err ? console.log(err) : console.log('Success!'))
+};
+
+module.exports = { generateDiv, generateHTML }
