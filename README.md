@@ -28,7 +28,8 @@ When the user is done and selects 'No more employees.', the terminal will log 'S
 
 ### Walkthrough Video:
 
-https://drive.google.com/file/d/1YsRMJtN8_sEI1lx-ZfG04PTnQFHLWbSl/view
+[teamProfileGenerator-demo.webm](https://user-images.githubusercontent.com/119711335/215937049-0e36431b-b155-4a51-b300-f39a94cfe934.webm)
+
 
 ## Credits
 I recieved assistance in this project from [Chris Zavala](https://github.com/ChrisZavala), who provided me with a ready to use HTML template, as well as [Karen Paezzoni](https://github.com/kpeazzoni), [Joshua Goeke](https://github.com/joshuagoeke), and [Myeonghun Jeong](https://github.com/mjtic) who all provided me with inspiration and encouragement while building.
